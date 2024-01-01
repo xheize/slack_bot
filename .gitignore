@@ -2,6 +2,13 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# custom file
+
+# Pycharm file
+.idea
+
+# vs code
+.vscode
 
 # C extensions
 *.so
