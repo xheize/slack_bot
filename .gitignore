@@ -2,7 +2,15 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
 # custom file
+.env
+
+# slack dir file
+slack/test.py
+
+# server dir file
+server/test.py
 
 # Pycharm file
 .idea
