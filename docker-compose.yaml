@@ -1,0 +1,10 @@
+'version':'3.7'
+'services':
+   'slack_bot':
+     'build':
+       'dockerfile': './slack/Dockerfile'
+   'web_server':
+      'build':
+        'dockerfile': './server/Dockerfile'
+   'redis':
+      'image': 'redis:latest'
