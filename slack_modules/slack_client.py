@@ -34,7 +34,7 @@ class SlackBot:
                 reply_broadcast=reply_broadcast
             )
 
-    def send_interactive_msg(self, channel_id: str, msg_block: dict, alert_msg: str="Something happened"):
+    def send_interactive_msg(self, channel_id: str, msg_block: dict, alert_msg: str = "Something happened"):
         self.bot.chat_postMessage(
             channel=channel_id,
             text=alert_msg,

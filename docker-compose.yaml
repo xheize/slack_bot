@@ -1,7 +1,12 @@
-'version':'3.7'
-'services':
-   'slack_bot':
-     'build':
-       'dockerfile': './Dockerfile'
-   'redis':
-      'image': 'redis:latest'
+version: "3.7"
+services:
+   slack_bot:
+     image: slack-bot:latest
+     build:
+       dockerfile: './Dockerfile'
+     ports:
+       - "8000:8000"
+     environment:
+       - "SLACK_APP_TOKEN=your_token"
+     restart: unless-stopped
+
