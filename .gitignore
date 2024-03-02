@@ -7,10 +7,10 @@ __pycache__/
 .env
 
 # slack dir file
-slack/test.py
+
 
 # server dir file
-server/test.py
+
 
 # Pycharm file
 .idea
