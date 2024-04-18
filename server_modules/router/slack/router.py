@@ -21,6 +21,23 @@ def status_command():
 
 
 @router.post("/webhook")
+def status_command(name: str, msg: dict):
+    result = slack_instance.send_webhook_message(webhook_name=name, msg=msg)
+    if result:
+        data = {
+            "code": "200",
+            "data": f"ok",
+        }
+        return JSONResponse(content=data)
+    else:
+        data = {
+            "code": "402",
+            "data": f"failed",
+        }
+        return JSONResponse(content=data)
+
+
+@router.post("/webhooktest")
 def status_command():
     result = slack_instance.send_webhook_message(webhook_name="AWS", msg={"text": "웹훅 테스트 압니다."})
     if result:
