@@ -14,6 +14,7 @@ __pycache__/
 
 # Pycharm file
 .idea
+docker-compose-test.yaml
 
 # vs code
 .vscode
