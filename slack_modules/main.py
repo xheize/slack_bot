@@ -67,8 +67,6 @@ class SlackBot:
                 return True
         return False
 
-        # url = "https://hooks.slack.com/services/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"
-
 
 class webhookClient:
 
@@ -85,8 +83,9 @@ class webhookClient:
     def send_message(self, text: str | None = None, blocks: list | None = None):
         if text == "":
             text = None
-        elif len(blocks) < 1:
-            blocks = None
+        elif blocks is not None:
+            if len(blocks) < 1:
+                blocks = None
         response = self.hookClient.send(
             text=text,
             blocks=blocks
