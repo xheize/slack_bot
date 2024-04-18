@@ -1,8 +1,9 @@
+from server_modules.router.slack.router import router as slack_router
 from fastapi import FastAPI
 
-from server_modules.router.slack.router import router as slack_router
-
 import uvicorn
+import os
+import asyncio
 
 app = FastAPI()
 
@@ -14,8 +15,26 @@ def heart_beat():
     return {"heartbeat": True}
 
 
-config = uvicorn.Config(app, port=8000, log_level="info")
-server = uvicorn.Server(config)
+class APIServer:
+
+    def __init__(self) -> None:
+        self.app = app
+        self.server = None
+        self.status = "init"
+
+    async def run(self):
+        if self.server:
+            print("Already Running Server")
+            return
+        config = uvicorn.Config(self.app, port=int(os.environ.get("SERVER_PORT")), log_level="info", loop="asyncio")
+        self.server = uvicorn.Server(config)
+        await self.server.serve()
+
+    def stop(self):
+        if self.server:
+            self.server.shutdown()
+            self.server = None
+
 
 if __name__ == "__main__":
     print("It's Server Main.py File\nStandAlone run not support\nplz Combine with fork or Process")

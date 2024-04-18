@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-
-from slack_modules.slack_client import SlackBot
+from slack_modules.main import SlackBot
 
 router = APIRouter()
 slack_instance = SlackBot()
@@ -11,9 +10,9 @@ def test_api(
         channel_id: str,
         msg: str,
 ):
-    slack_instance.send_static_msg(
+    slack_instance.send_post_message(
         channel_id=channel_id,
-        msg_string=msg
+        text=msg
     )
     return {"code": 200}
 
