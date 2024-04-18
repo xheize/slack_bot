@@ -2,4 +2,5 @@
 .gitattributes
 .gitignore
 docker-compose.yaml
+docker-compose-test.yaml
 README.md
