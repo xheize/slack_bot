@@ -3,11 +3,11 @@ from fastapi import FastAPI
 
 import uvicorn
 import os
-import asyncio
 
 app = FastAPI()
 
 app.include_router(prefix="/slack", router=slack_router)
+# app.include_router(prefix="/api/v1", router=module_router)
 
 
 @app.get("/api/v2/heart-beat")
@@ -26,7 +26,7 @@ class APIServer:
         if self.server:
             print("Already Running Server")
             return
-        config = uvicorn.Config(self.app, port=int(os.environ.get("SERVER_PORT")), log_level="info", loop="asyncio")
+        config = uvicorn.Config(self.app, host="0.0.0.0", port=int(os.environ.get("SERVER_PORT")), log_level="info", loop="asyncio")
         self.server = uvicorn.Server(config)
         await self.server.serve()
 
