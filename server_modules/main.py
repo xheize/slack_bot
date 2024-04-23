@@ -1,4 +1,5 @@
 from server_modules.router.slack.router import router as slack_router
+# from server_modules.router.control.router import router as control_router
 from fastapi import FastAPI
 
 import uvicorn
@@ -7,10 +8,10 @@ import os
 app = FastAPI()
 
 app.include_router(prefix="/slack", router=slack_router)
-# app.include_router(prefix="/api/v1", router=module_router)
+# app.include_router(prefix="/api/v1", router=control_router)
 
 
-@app.get("/api/v2/heart-beat")
+@app.get("/api/v1/heart-beat")
 def heart_beat():
     return {"heartbeat": True}
 

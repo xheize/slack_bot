@@ -1,9 +1,15 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 from slack_modules.main import SlackBot
 
 router = APIRouter()
 slack_instance = SlackBot()
+
+
+class WebhookPayload(BaseModel):
+    name: str
+    msg: dict
 
 
 @router.post("/event")
@@ -21,8 +27,8 @@ def status_command():
 
 
 @router.post("/webhook")
-def status_command(name: str, msg: dict):
-    result = slack_instance.send_webhook_message(webhook_name=name, msg=msg)
+def status_command(payload: WebhookPayload):
+    result = slack_instance.send_webhook_message(webhook_name=payload.name, msg=payload.msg)
     if result:
         data = {
             "code": "200",
