@@ -2,10 +2,19 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
 # custom file
+.env
+
+# slack dir file
+
+
+# server dir file
+
 
 # Pycharm file
 .idea
+docker-compose-test.yaml
 
 # vs code
 .vscode

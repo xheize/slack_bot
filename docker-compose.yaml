@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+   slack_bot:
+     image: slack-bot:latest
+     ports:
+       - "8000:8000"
+     environment:
+       - "SERVER_PORT=port_num"
+       - "SLACK_WEBHOOK_URL=hook_url"
+       - "SLACK_WEBHOOK_NAME=hook_name?"
+       - "SLACK_APP_TOKEN=your_token"
+     restart: unless-stopped
+
