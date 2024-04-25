@@ -22,6 +22,9 @@ class SlackBot:
             self.webhook_list: list | list[webhookClient] = []
             self.bot = None
             self.status = "init"
+            self.environment = os.environ.get("SLACK_MODE")
+            if not self.environment == "DEV" and not self.environment == "PROD":
+                raise ValueError("모드설정이 되어있지 않습니다.")
 
     async def run(self):
         try:
@@ -54,18 +57,29 @@ class SlackBot:
     def send_post_message(self, channel_id: str, text: str | None = "", msg_block: dict | None = None,
                           thread_ts: str = None, reply_broadcast: bool = False,
                           ):
+        tmp_text = text
+        if tmp_text:
+            status_add_text = f"[{self.environment}]{tmp_text}"
+        else:
+            status_add_text = f"[{self.environment}]"
         self.bot.chat_postMessage(
             channel=channel_id,
-            text=text,
+            text=status_add_text,
             attachments=msg_block,
             thread_ts=thread_ts,
             reply_broadcast=reply_broadcast
         )
 
     def send_webhook_message(self, webhook_name: str, msg: dict):
+        tmp_text = msg.get("text")
+        if tmp_text:
+            status_add_text = f"[{self.environment}]{tmp_text}"
+        else:
+            status_add_text = f"[{self.environment}]"
+
         for webhook_instance in self.webhook_list:
             if webhook_name == str(webhook_instance):
-                _text = msg.get("text")
+                _text = status_add_text
                 _blocks = msg.get("blocks")
                 webhook_instance.send_message(text=_text, blocks=_blocks)
                 return True
