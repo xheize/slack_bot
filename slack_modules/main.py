@@ -30,18 +30,22 @@ class SlackBot:
                 raise EnvironmentError("토큰값이 존재 하지 않습니다.")
             else:
                 self.bot = WebClient(token)
-            webhook_url_value = os.environ.get("SLACK_WEBHOOK_URL")
-            webhook_name_value = os.environ.get("SLACK_WEBHOOK_NAME")
-            if webhook_url_value:
-                webhook_url_list = webhook_url_value.split(",")
-            if webhook_name_value:
-                webhook_name_list = webhook_name_value.split(",")
-            for webhook_url, webhook_name in zip(webhook_url_list, webhook_name_list):
-                instance = webhookClient(name=webhook_name, url=webhook_url)
-                self.webhook_list.append(instance)
+            self.add_webhook_list()
+            self.status = "running"
             return
         except errors.SlackClientConfigurationError:
             ConnectionError("Cannot connect SLACK Server\ncheck token Value")
+
+    def add_webhook_list(self):
+        webhook_url_value = os.environ.get("SLACK_WEBHOOK_URL")
+        webhook_name_value = os.environ.get("SLACK_WEBHOOK_NAME")
+        if webhook_name_value and webhook_url_value:
+            webhook_url_list = webhook_url_value.split(",")
+            webhook_name_list = webhook_name_value.split(",")
+            for webhook_url, webhook_name in zip(webhook_url_list, webhook_name_list):
+                instance = webhookClient(name=webhook_name, url=webhook_url)
+                self.webhook_list.append(instance)
+        return
 
     def get_status(self):
         bot_status = self.bot.bots_info()
